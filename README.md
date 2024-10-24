@@ -101,7 +101,7 @@ CREATE TABLE return_status
 
 ```
 ### Foreign key constraints added
-    ```sql
+```sql
 ALTER TABLE issued_status
 ADD CONSTRAINT fk_members
 FOREIGN KEY (issued_member_id)
@@ -126,7 +126,6 @@ ALTER TABLE return_status
 ADD CONSTRAINT fk_issued_status
 FOREIGN KEY (issued_id)
 REFERENCES issued_status(issued_id)
-
 ```
 
 ### 2. CRUD Operations
@@ -176,11 +175,11 @@ FROM member m
 JOIN issued_status i
 ON m.member_id=i.issued_member_id
 GROUP BY m.member_name
-HAVING book_count>1```
+HAVING book_count>1
+```
 
-### 3. CTAS (Create Table As Select)
 
-- **Task 6: Create Summary Tables**: Used CTAS to generate new tables based on query results - each book and total book_issued_cnt**
+**Task 6: Create Summary Tables**: Used CTAS to generate new tables based on query results - each book and total book_issued_cnt**
 
 ```sql
 CREATE TABLE book_issued_count AS
@@ -196,14 +195,15 @@ ON
     b.isbn = i.issued_book_isbn
 GROUP BY 
     b.isbn, 
-    b.book_title;```
+    b.book_title;
+```
 
 
 ### 4. Data Analysis & Findings
 
 The following SQL queries were used to address specific questions:
 
-Task 7. **Retrieve All Books in a Specific Category**:
+**Task 7. **Retrieve All Books in a Specific Category**:
 
 ```sql
 SELECT * FROM books
@@ -228,7 +228,8 @@ GROUP BY 1
 9. **List Members Who Registered in the Last 180 Days**:
 ```sql
 SELECT * FROM member
-WHERE reg_date >= current_date - interval 180 day```
+WHERE reg_date >= current_date - interval 180 day
+```
 
 10. **List Employees with Their Branch Manager's Name and their branch details**:
 
@@ -246,7 +247,8 @@ branch as b
 ON e1.branch_id = b.branch_id    
 JOIN
 employee as e2
-ON e2.emp_id = b.manager_id```
+ON e2.emp_id = b.manager_id
+```
 
 
 Task 11. **Create a Table of Books with Rental Price Above a Certain Threshold**:
@@ -284,7 +286,8 @@ JOIN books b
 ON b.isbn=i.issued_book_isbn
 LEFT JOIN return_status r
 ON i.issued_id=r.issued_id
-WHERE r.return_id IS NULL and datediff(current_date, issued_date)>30```
+WHERE r.return_id IS NULL and datediff(current_date, issued_date)>30
+```
 
 
 **Task 14: Update Book Status on Return**  
@@ -345,7 +348,8 @@ LEFT JOIN return_status r
 ON i.issued_id=r.issued_id
 JOIN books bks 
 ON i.issued_book_isbn=bks.isbn
-GROUP BY b.branch_id;```
+GROUP BY b.branch_id;
+```
 
 **Task 16: CTAS: Create a Table of Active Members**  
 Use the CREATE TABLE AS (CTAS) statement to create a new table active_members containing members who have issued at least one book in the last 6 months.
@@ -386,7 +390,8 @@ branch as b
 ON e.branch_id = b.branch_id
 GROUP BY 1, 2
 ORDER BY no_book_issued DESC
-LIMIT 3```
+LIMIT 3
+```
 
 
 **Task 18: Stored Procedure**
@@ -477,8 +482,6 @@ GROUP BY
     m.member_id
 ORDER BY 
     m.member_id;
-
-
 ```
 
 
